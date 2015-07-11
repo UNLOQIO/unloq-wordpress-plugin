@@ -33,6 +33,10 @@ class UnloqLogin
         // IF only the UNLOQ login way is enabled, we block anything else.
         $action = strtolower(isset($_REQUEST['action']) ? $_REQUEST['action'] : 'login');
         if($action == "login" || $action == "logout") {
+            if(isset($_REQUEST['redirect_to'])) {
+                // We temporary save the redirect_to to the session.
+                UnloqUtil::tempFlash("redirect_to", $_REQUEST["redirect_to"]);
+            }
             // we place any errors we've got in the flash in the errors section.
             $flashes = UnloqUtil::flash(false);
             if (count($flashes) > 0) {

@@ -82,6 +82,12 @@ class UnloqUAuth
             exit;
         }
         $requested_redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
+        if(!$requested_redirect_to) {
+            $flash = UnloqUtil::tempFlash("redirect_to");
+            if($flash) {
+                $requested_redirect_to = $flash;
+            }
+        }
         // Once we're here, we got the user data in the $res->data field. Primarily, we have $res->data['id'] and $res->data['email']
         $unloqId = strval($res->data['id']);
         $user = $this->readUser($res->data, $unloqId);

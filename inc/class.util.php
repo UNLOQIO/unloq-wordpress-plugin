@@ -4,6 +4,28 @@ class UnloqUtil
 {
     const UNLOQ_FLASH_KEY = "wpunloq_sess";
 
+    /* Temporary store the key/value in the session, for exactly 1 request cycle. */
+    public static function tempFlash($key = null, $value = null) {
+        if(!isset($_SESSION)) {
+            return false;
+        }
+        $sessKey = self::UNLOQ_FLASH_KEY . "_temp";
+        if($value === null) {   // we return the key value.
+            if(!isset($_SESSION[$sessKey]) || !isset($_SESSION[$sessKey][$key])) return null;
+            $tmp = $_SESSION[$sessKey][$key];
+            unset($_SESSION[$sessKey][$key]);
+            if(count($_SESSION[$sessKey]) == 0) {
+                unset($_SESSION[$sessKey]);
+            }
+            return $tmp;
+        }
+        if(!isset($_SESSION[$sessKey])) {
+            $_SESSION[$sessKey] = array();
+        }
+        $_SESSION[$sessKey][$key] = $value;
+        return true;
+    }
+
     /* Sets a flash message in the session */
     public static function flash($message = null, $type = 'error') {
         // IF no message, we retrieve all flashes.

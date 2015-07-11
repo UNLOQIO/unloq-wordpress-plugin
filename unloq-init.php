@@ -4,7 +4,6 @@ class Unloq {
     private static $instance = null;
     private function __construct() {
         $this->set_constants();
-        $this->set_actions();
         if(UNLOQ_BASE_PLUGIN) {
             require_once(UNLOQ_PATH . '/inc/class.setup.php');
             UnloqSetup::start();
@@ -29,10 +28,6 @@ class Unloq {
         define('UNLOQ_ASSETS', UNLOQ_URL . 'assets/');
         define('UNLOQ_TEMPLATE_PATH', UNLOQ_PATH . 'templates/');
         define('UNLOQ_NS', 'wpunloq');
-    }
-
-    private function set_actions() {
-
     }
 
     public static function start() {
