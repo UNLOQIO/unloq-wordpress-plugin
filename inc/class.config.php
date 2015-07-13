@@ -17,7 +17,7 @@ class UnloqConfig {
 
     private static function query() {
         $settings = get_option(UNLOQ_NS);
-        if(is_string($settings)) {
+        if(is_string($settings) && trim($settings) != "") {
             $settings = unserialize($settings);
         }
         if(!is_array($settings)) {
@@ -28,6 +28,7 @@ class UnloqConfig {
     }
 
     public static function isActive() {
+        if(!self::isSetup()) return false;
         if(self::$instance->active == null) {
             $tmp = get_option("UNLOQ_ACTIVE");
             self::$instance->active = ($tmp == "true");
