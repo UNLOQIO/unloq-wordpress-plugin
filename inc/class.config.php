@@ -28,7 +28,6 @@ class UnloqConfig {
     }
 
     public static function isActive() {
-        if(!self::isSetup()) return false;
         if(self::$instance->active == null) {
             $tmp = get_option("UNLOQ_ACTIVE");
             self::$instance->active = ($tmp == "true");

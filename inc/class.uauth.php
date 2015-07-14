@@ -8,7 +8,7 @@ class UnloqUAuth
 
     public static function bind() {
         // If the plugin is enabled, we hook into the redirection system.
-        if (!UnloqConfig::isActive()) {
+        if (!UnloqConfig::isActive() || !UnloqConfig::isSetup()) {
             return;
         }
         self::$binded = true;
