@@ -119,7 +119,7 @@ class UnloqApi
         if ($duration != null) {
             $data['duration'] = $duration;
         }
-        $res = $this->request("POST", "/token/authenticate", $data);
+        $res = $this->request("POST", "/token", $data);
         if (!$res->error) {
             // We verify the data integrity.
             if (!isset($res->data['id']) || !isset($res->data['email'])) {
