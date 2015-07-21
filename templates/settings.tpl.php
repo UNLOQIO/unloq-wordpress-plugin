@@ -41,6 +41,10 @@
                 <a href="<?php echo UnloqUtil::pluginUrl(array('setup' => 'true')) ?>" class="button">Enter setup</a>
             </p>
 
+            <br/>
+            <p class="helper">
+                You can find out more about the UNLOQ Login plugin <a href="http://unloq.readme.io/v1/docs/integration" target="_blank">here</a>.
+            </p>
         </form>
     </div>
 </div>
