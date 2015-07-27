@@ -23,7 +23,7 @@ $domain = $url[0] . "//" . $url[2];
             <li>4. Configure the application</li>
             <li>5. Enter the API Key and API Secret of your app bellow.</li>
         </ul>
-        <form id="unloq-form" method="post">
+        <form id="unloq-form" method="post" autocomplete="off">
             <?php wp_nonce_field('unloq_setup'); ?>
             <table class="form-table">
                 <tr valign="top">

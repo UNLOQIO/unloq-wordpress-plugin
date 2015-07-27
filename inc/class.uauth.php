@@ -97,7 +97,7 @@ class UnloqUAuth
         }
         // user created/read, we log him in
         $secure_cookie = false;
-        if(get_user_option('user_ssl', $user->ID)) {
+        if(FORCE_SSL_ADMIN) {
             $secure_cookie = true;
             force_ssl_admin(true);
         }
