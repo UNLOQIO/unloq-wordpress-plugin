@@ -9,6 +9,8 @@ class UnloqApi
     const PLUGIN_LOGIN = "https://plugin.unloq.io/login.js";
     const HOOK_LOGIN = "/?unloq_uauth=login";
     const HOOK_LOGOUT = "/?unloq_uauth=logout";
+    const HOOK_LINK = "/?unloq_uauth=link";
+    const HOOK_UNLINK = "/?unloq_uauth=unlink";
 
     public function __construct($key = null, $secret = null) {
         if (!$key) {
@@ -82,13 +84,18 @@ class UnloqApi
     public function getHook($which) {
         $fullUrl = get_site_url();
         $fullPath = UnloqUtil::getUrlPath($fullUrl);
-        if ($which == "login") {
-            return $fullPath . self::HOOK_LOGIN;
+        switch($which) {
+            case "login":
+                return $fullPath . self::HOOK_LOGIN;
+            case "logout":
+                return $fullPath . self::HOOK_LOGOUT;
+            case "link":
+                return $fullPath . self::HOOK_LINK;
+            case "unlink":
+                return $fullPath . self::HOOK_UNLINK;
+            default:
+                return null;
         }
-        if ($which == "logout") {
-            return $fullPath . self::HOOK_LOGOUT;
-        }
-        return null;
     }
 
     /*
@@ -102,6 +109,28 @@ class UnloqApi
             $logoutPath = $this->getHook('logout');
         }
         $res = $this->request("POST", "/settings/webhooks", array('login' => $loginPath, 'logout' => $logoutPath));
+        return $res;
+    }
+
+    /*
+     * Updates the application's app-linking settings.
+     * */
+    public function updateAppLinking($linkPath = null, $unlinkPath = null) {
+        $isEnabled = UnloqConfig::get('app_linking');
+        $data = array();
+        if($isEnabled) {
+            if($linkPath == null) {
+                $linkPath = $this->getHook('link');
+            }
+            if($unlinkPath == null) {
+                $unlinkPath = $this->getHook('unlink');
+            }
+            $data['link'] = $linkPath;
+            $data['unlink'] = $unlinkPath;
+        } else {
+            $data['disable'] = "true";
+        }
+        $res = $this->request("POST", "/settings/linking", $data);
         return $res;
     }
 
@@ -136,11 +165,19 @@ class UnloqApi
     * 4. HMAC-SHA256 with the app's api secret
     * 5. Base64-encode the signature.
      * */
-    public function verifySignature($path, $data, $signature) {
+    public function verifySignature($path, $data, $signature = null) {
+        if($signature == null) {    // We take it from headers.
+            $headers = getallheaders();
+            if(!isset($headers['X-Unloq-Signature']) || !isset($headers['X-Requested-With'])) {
+                return false;
+            }
+            $signature = $headers['X-Unloq-Signature'];
+        }
         if(!is_string($path) || !is_array($data)) return false;
         if(substr($path, 0, 1) !== "/") { $path = '/' . $path; }
         $sorted = array();
         foreach($data as $key => $value) {
+            if($key == "unloq_uauth") continue;
             array_push($sorted, $key);
         }
         asort($sorted);

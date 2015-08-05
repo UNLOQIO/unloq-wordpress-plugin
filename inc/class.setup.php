@@ -6,12 +6,12 @@ class UnloqSetup {
     }
 
     public static function activate_plugin() {
-        // We add unloq_id and unloq_sign to the users table
+        // We add unloq_id and unloq_secret to the users table
         global $wpdb;
         $userTable = $wpdb->prefix . "users";
         try {
             $wpdb->suppress_errors = true;
-            $wpdb->query("ALTER TABLE $userTable ADD unloq_id INT NULL DEFAULT NULL , ADD  unloq_sign VARCHAR( 100 ) NULL DEFAULT NULL");
+            $wpdb->query("ALTER TABLE $userTable ADD unloq_id INT NULL DEFAULT NULL , ADD unloq_secret VARCHAR( 100 ) NULL DEFAULT NULL");
         } catch(Exception $e) {
             // we've already altered it.
         }
@@ -51,10 +51,10 @@ class UnloqSetup {
     }
 
     public static function uninstall_plugin() {
-        // We drop the unloq_id and unloq_sign from the users table.
+        // We drop the unloq_id and unloq_secret from the users table.
         global $wpdb;
         $userTable = $wpdb->prefix . "users";
-        $wpdb->query("ALTER TABLE $userTable DROP unloq_id, DROP unloq_sign");
+        $wpdb->query("ALTER TABLE $userTable DROP unloq_id, DROP unloq_secret");
         delete_option(UNLOQ_NS);
         delete_option("UNLOQ_ACTIVE");
     }

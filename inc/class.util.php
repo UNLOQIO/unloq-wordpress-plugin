@@ -57,6 +57,9 @@ class UnloqUtil
     public static function isPost() {
         return ($_SERVER['REQUEST_METHOD'] === "POST");
     }
+    public static function isOptions() {
+        return ($_SERVER['REQUEST_METHOD'] === "OPTIONS");
+    }
 
     public static function query($key) {
         return (isset($_GET) && isset($_GET[$key]) ? $_GET[$key] : null);

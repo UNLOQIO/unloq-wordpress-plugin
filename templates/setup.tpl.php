@@ -42,6 +42,22 @@ $domain = $url[0] . "//" . $url[2];
                         <input type="password" id="unloqApiSecret" name="api_secret" value=""/>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th class="option-key" scope="row">
+                        <label for="unloqLinkHooks">App linking</label>
+                    </th>
+                    <td colspan="2">
+                        <select name="app_linking" id="unloqLinkHooks">
+                            <option value="0" <?php if(!UnloqConfig::get("app_linking")) echo "selected='selected'";?>>Disabled</option>
+                            <option value="1" <?php if(UnloqConfig::get("app_linking")) echo "selected='selected'";?>>Enabled</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="padding-left: 0; padding-top: 5px; font-size: 90%;">
+                        You can find additional information on application linking in <a href="https://unloq.readme.io/docs/app-linking-introduction" target="_blank">our documentation</a>.
+                    </td>
+                </tr>
             </table>
             <br/>
             <?php submit_button("Setup"); ?>

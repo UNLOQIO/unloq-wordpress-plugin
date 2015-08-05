@@ -4,7 +4,7 @@
  Holds the UNLOQ configuration array, serializing it to the db and back.
  */
 class UnloqConfig {
-    private static $fields = array('api_key', 'api_secret', 'theme', 'login_type', 'is_setup');
+    private static $fields = array('api_key', 'api_secret', 'theme', 'login_type', 'is_setup', 'app_linking');
     private static $instance = null;
     private $config;
     private $loaded = false;
@@ -78,6 +78,8 @@ class UnloqConfig {
                 break;
             case "login_type":
                 $err = self::$instance->validate_login($val);
+                break;
+            case "app_linking":
                 break;
         }
         if($err) {
