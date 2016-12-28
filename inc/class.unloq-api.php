@@ -9,8 +9,6 @@ class UnloqApi
     const PLUGIN_LOGIN = "https://plugin.unloq.io/login.js";
     const HOOK_LOGIN = "/?unloq_uauth=login";
     const HOOK_LOGOUT = "/?unloq_uauth=logout";
-    const HOOK_LINK = "/?unloq_uauth=link";
-    const HOOK_UNLINK = "/?unloq_uauth=unlink";
 
     public function __construct($key = null, $secret = null) {
         if (!$key) {
@@ -89,10 +87,6 @@ class UnloqApi
                 return $fullPath . self::HOOK_LOGIN;
             case "logout":
                 return $fullPath . self::HOOK_LOGOUT;
-            case "link":
-                return $fullPath . self::HOOK_LINK;
-            case "unlink":
-                return $fullPath . self::HOOK_UNLINK;
             default:
                 return null;
         }
@@ -112,27 +106,6 @@ class UnloqApi
         return $res;
     }
 
-    /*
-     * Updates the application's app-linking settings.
-     * */
-    public function updateAppLinking($linkPath = null, $unlinkPath = null) {
-        $isEnabled = UnloqConfig::get('app_linking');
-        $data = array();
-        if($isEnabled) {
-            if($linkPath == null) {
-                $linkPath = $this->getHook('link');
-            }
-            if($unlinkPath == null) {
-                $unlinkPath = $this->getHook('unlink');
-            }
-            $data['link'] = $linkPath;
-            $data['unlink'] = $unlinkPath;
-        } else {
-            $data['disable'] = "true";
-        }
-        $res = $this->request("POST", "/settings/linking", $data);
-        return $res;
-    }
 
     /*
      * Tries and fetches attached information of the UAuth access token.

@@ -26,7 +26,12 @@ jQuery(function($) {
 
   /* initializez the unloq plugin. */
   function initialize() {
-    $unloqBox.html("<script type='text/javascript' src='"+PLUGIN_URL+"' data-unloq-key='"+PLUGIN_KEY+"' data-unloq-theme='"+PLUGIN_THEME+"'></script>");
+    var $scr = $("<script></script>");
+    $scr.attr("type", "text/javascript");
+    $scr.attr("data-unloq-key", PLUGIN_KEY);
+    $scr.attr("data-unloq-theme", PLUGIN_THEME);
+    $unloqBox.append($scr);
+    $scr.attr("src", PLUGIN_URL);
     isInitialized = true;
   }
 

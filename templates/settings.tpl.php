@@ -15,24 +15,9 @@
                     </th>
                     <td valign="top">
                         <select name="login_type" id="unloqLoginType">
-                            <option value="UNLOQ" <?php if (UnloqConfig::get('login_type') == "UNLOQ") { ?>selected="selected"<?php } ?>>UNLOQ-only</option>
                             <option value="UNLOQ_PASS" <?php if (UnloqConfig::get('login_type') == "UNLOQ_PASS") { ?>selected="selected"<?php } ?>>UNLOQ or passwords</option>
+                            <option value="UNLOQ" <?php if (UnloqConfig::get('login_type') == "UNLOQ") { ?>selected="selected"<?php } ?>>UNLOQ-only</option>
                         </select>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th class="option-key" scope="row">
-                        <label for="unloqTheme">Plugin theme</label>
-                    </th>
-                    <td valign="top" style="vertical-align: top; width: 200px;">
-                        <select name="theme" id="unloqTheme">
-                            <option value="light" <?php if (UnloqConfig::get('theme') == "light") { ?>selected="selected"<?php } ?>>Light</option>
-                            <option value="dark" <?php if (UnloqConfig::get('theme') == "dark") { ?>selected="selected"<?php } ?>>Dark</option>
-                        </select>
-                    </td>
-                    <td valign="top" style="text-align: right;">
-                        <img class="login-theme login-dark" src="<?php echo UnloqUtil::image('login-dark.png') ?>" alt="Dark login theme"/>
-                        <img class="login-theme login-light" src="<?php echo UnloqUtil::image('login-light.png') ?>" alt="Light login theme"/>
                     </td>
                 </tr>
             </table>

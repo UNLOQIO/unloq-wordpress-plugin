@@ -89,7 +89,8 @@ class UnloqUtil
         if (!$parsed) {
             return "";
         }
-        return $parsed['path'];
+        //return $parsed['path'];
+        return $url;
     }
 
 

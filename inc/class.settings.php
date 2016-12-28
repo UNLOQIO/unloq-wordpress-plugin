@@ -33,15 +33,14 @@ class UnloqSettings {
     }
 
     /*
-     * Performs the UNLOQ setup, collecting the API key, API Secret and testing the credentials,
+     * Performs the UNLOQ setup, collecting the API key, Login Widget key and testing the credentials,
      * while updating the login/logout webhook
      * */
     private static function setup($data) {
         // Step one: we verify the new api key/secret
         $errs = UnloqConfig::set(array(
             'api_key' => $data['api_key'],
-            'api_secret' => $data['api_secret'],
-            'app_linking' => $data['app_linking'] == "1" ? true : false));
+            'api_secret' => $data['api_secret']));
         if ($errs) {
             foreach ($errs as $error) {
                 add_settings_error("unloq_setup", null, $error->message);
@@ -53,11 +52,6 @@ class UnloqSettings {
         // We now capture the login/logout paths
         $res = $api->updateHooks();
         if($res->error) {
-            add_settings_error("unloq_setup", null, $res->message);
-            return false;
-        }
-        $link = $api->updateAppLinking();
-        if($link->error) {
             add_settings_error("unloq_setup", null, $res->message);
             return false;
         }

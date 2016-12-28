@@ -18,25 +18,21 @@ $domain = $url[0] . "//" . $url[2];
         <h4>Steps for enabling the UNLOQ plugin on this website:</h4>
         <ul>
             <li>1. Login to UNLOQ</li>
-            <li>2. Create and verify the domain <b><?php echo $domain; ?></b></li>
-            <li>3. Create an application with this domain</li>
-            <li>4. Configure the application</li>
-            <li>5. Enter the API Key and API Secret of your app bellow.</li>
+            <li>2. Create a WordPress Web Application with the domain: <b><?php echo $domain; ?></b></li>
+            <li>3. Configure the application</li>
+            <li>4. Go to the application's Settings > Widgets section and verify your domain</li>
+            <li>5. Go to the application's Settings > General > API Keys and add a new key</li>
+            <li>6. Enter the API Key and Login Widget Key of your app bellow.</li>
         </ul>
+        <p>
+            <i>Note</i>: the API Key is visible only once. You can get the login widget key by selecting the "Get Script" action from the Login Widget.
+        </p>
         <form id="unloq-form" method="post" autocomplete="off">
             <?php wp_nonce_field('unloq_setup'); ?>
             <table class="form-table">
                 <tr valign="top">
                     <th class="option-key" scope="row">
-                        <label for="unloqApiKey">API Key</label>
-                    </th>
-                    <td colspan="2">
-                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo (UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')) ?>"/>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th class="option-key" scope="row">
-                        <label for="unloqApiSecret">API Secret</label>
+                        <label for="unloqApiSecret">API Key</label>
                     </th>
                     <td colspan="2">
                         <input type="password" id="unloqApiSecret" name="api_secret" value=""/>
@@ -44,18 +40,10 @@ $domain = $url[0] . "//" . $url[2];
                 </tr>
                 <tr valign="top">
                     <th class="option-key" scope="row">
-                        <label for="unloqLinkHooks">App linking</label>
+                        <label for="unloqApiKey">Login Widget Key</label>
                     </th>
                     <td colspan="2">
-                        <select name="app_linking" id="unloqLinkHooks">
-                            <option value="0" <?php if(!UnloqConfig::get("app_linking")) echo "selected='selected'";?>>Disabled</option>
-                            <option value="1" <?php if(UnloqConfig::get("app_linking")) echo "selected='selected'";?>>Enabled</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="padding-left: 0; padding-top: 5px; font-size: 90%;">
-                        You can find additional information on application linking in <a href="https://unloq.readme.io/docs/app-linking-introduction" target="_blank">our documentation</a>.
+                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo (UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')) ?>"/>
                     </td>
                 </tr>
             </table>

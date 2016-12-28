@@ -4,7 +4,7 @@
  Holds the UNLOQ configuration array, serializing it to the db and back.
  */
 class UnloqConfig {
-    private static $fields = array('api_key', 'api_secret', 'theme', 'login_type', 'is_setup', 'app_linking');
+    private static $fields = array('api_key', 'api_secret', 'theme', 'login_type', 'is_setup');
     private static $instance = null;
     private $config;
     private $loaded = false;
@@ -79,8 +79,6 @@ class UnloqConfig {
             case "login_type":
                 $err = self::$instance->validate_login($val);
                 break;
-            case "app_linking":
-                break;
         }
         if($err) {
             return $err;
@@ -93,18 +91,12 @@ class UnloqConfig {
         if(!isset($val) || $val == "") {
             return new UnloqError("Please enter the API key", "api_key");
         }
-        if(strlen($val) != 64) {
-            return new UnloqError("The API key must be exactly 64 characters long", "api_key");
-        }
         return null;
     }
 
     private function validate_secret($val) {
         if(!isset($val) || $val == "") {
-            return new UnloqError("Please enter the API secret", "api_secret");
-        }
-        if(strlen($val) != 32) {
-            return new UnloqError("The API secret must be exactly 32 characters long", "api_secret");
+            return new UnloqError("Please enter the widget key", "api_secret");
         }
         return null;
     }

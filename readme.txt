@@ -38,7 +38,7 @@ We believe it’s about your application & your users. Make the authentication s
 
 ### Once activated
 1. Open the UNLOQ setup page
-2. Enter your API Key / API Secret and click the "SETUP" button.
+2. Enter your API Key / Login Widget key and click the "SETUP" button.
 >> Note: You must first register at https://unloq.io , create an organization, verify your site's domain and finally create an application. For more details, please visit https://unloq.io/developers/get-started/
 3. Choose which type of login you would want to allow (UNLOQ and/or regular passwords)
 4. Select the UNLOQ box theme.

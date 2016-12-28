@@ -58,15 +58,6 @@ class UnloqUAuth
             $this->logout();
             return;
         }
-        // If we have uauth=link or uauth=unlink, we do the app linking, if enabled.
-        if($action == "link") {
-            $this->appLink();
-            return;
-        }
-        if($action == "unlink" && UnloqUtil::isPost()) {
-            $this->appUnlink();
-            return;
-        }
     }
 
     /*
@@ -187,144 +178,7 @@ class UnloqUAuth
         return $user;
     }
 
-    /*
-     * Verifies the app linking between the given user information and the local user information.
-     * Arguments:
-     *   - user - the User database object.abstract
-     *   - linkData - an assoc array containing link_key and link_signature. This comes from the device.
-     *
-     * We check it as follows:
-     *  0. If the user has no secret,
-     *  1. verify that link_key and link_signature exists in linkData.
-     * */
-    private function _verifyAppLinking($user, $linkData) {
-        if(!is_string($user->unloq_secret) || strlen($user->unloq_secret) < 32) {
-            return "NO_LINK";
-        }
-        if(!isset($linkData['link_key']) || !isset($linkData['link_signature'])) {
-            return "NO_LINK_DATA";
-        }
-        // We now verify the signature with the user's unloq secret
-        $hash = hash_hmac("sha256", $linkData['link_key'], $user->unloq_secret, true);
-        $finalHash = base64_encode($hash);
-        if($finalHash !== $linkData['link_signature']) return "INVALID_LINK";
-        return true;
-    }
 
-    /*
-     * Performs user-app linking.
-     * Data found in the request:
-     * 0. Querystring: key={appApiKey}, id={unloqProfileId}
-     * 1. X-Unloq-Signature: UNLOQ signature of: unlinkPath+queryString
-     * 2. POST:
-     *      - secret - the generated secret by the device.
-     * */
-    private function appLink() {
-        $isActive = UnloqConfig::get('app_linking');
-        if(!$isActive) return;
-        // Step one: we enable CORS.
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: *");
-        header('Access-Control-Allow-Headers: X-Unloq-Signature, X-Requested-With');
-        if(UnloqUtil::isOptions()) exit;
-
-        // Step two: verify the unloq signature.
-        $headers = getallheaders();
-        $secret = UnloqUtil::body("secret");
-        $unloqId = UnloqUtil::query("id");
-        if(!$unloqId || !$secret || strlen($secret) != 32) {
-            status_header(500);
-            echo "Invalid linking data.";
-            exit;
-        }
-        // Check for the signature header
-        if(!isset($headers['X-Unloq-Signature']) || !isset($headers['X-Requested-With']) || $headers['X-Requested-With'] != "unloq-app") {
-            status_header(500);
-            echo "Invalid HTTP Headers";
-            exit;
-        }
-        $signature = $headers['X-Unloq-Signature'];
-        // Step 3: verify the UNLOQ signature.
-        $api = new UnloqApi();
-        $linkHook = $api->getHook("link");
-        if(!$api->verifySignature($linkHook, $_GET, $signature)) {
-            status_header(500);
-            echo "Invalid link signature.";
-            exit;
-        }
-        // We read the user.
-        $user = $this->_readUserByUID($unloqId);
-        if(!$user) {
-            status_header(404);
-            echo "User not found";
-            exit;
-        }
-        // If the user already has a secret, we do not allow it.
-        if($user->unloq_secret) {
-            status_header(500);
-            echo "User already linked.";
-            exit;
-        }
-        if(!$this->_updateUnloqSecret($unloqId, $secret)) {
-            status_header(500);
-            echo "Failed to save secret.";
-            exit;
-        }
-        echo"{}";
-        exit;
-    }
-    /*
-     * Performs user-app unlinking.
-     * */
-    private function appUnlink() {
-        $isActive = UnloqConfig::get('app_linking');
-        if(!$isActive) return;
-        $unloqId = UnloqUtil::body("id");
-        $secret = UnloqUtil::body("secret");    // If this is set, the request comes directly from the user.
-        if(!$unloqId) {
-            status_header(500);
-            echo "Invalid unlink data";
-            exit;
-        }
-        $api = new UnloqApi();
-        $unlinkHook = $api->getHook("unlink");
-        if(!$api->verifySignature($unlinkHook, $_POST)) {
-            status_header(500);
-            echo "Invalid unlink signature.";
-            exit;
-        }
-        $user = $this->_readUserByUID($unloqId);
-        if(!$user) {
-            status_header(404);
-            echo "User not found";
-            exit;
-        }
-        // If the user had no secret, we do nothing.
-        if(!$user->unloq_secret) {
-            echo "User did not have previous secret.";
-            exit;
-        }
-        // At this point, we will update the user's secret.
-        $oldSecret = $user->unloq_secret;
-        if(!$this->_updateUnloqSecret($unloqId, null)) {
-            status_header(500);
-            echo "Failed to update user secret.";
-            exit;
-        }
-        // If the request did not come directly from the user, we will send an e-mail to the admin.
-        if($oldSecret !== $secret) {
-            $admin = get_option('admin_email');
-            if($admin) {
-                $headers = 'From: UNLOQ.io plugin' . "\r\n";
-                $unloq_email = $user->user_email;
-                $unloq_id = $unloqId;
-                $content = UnloqUtil::render("unlink");
-                wp_mail($admin, "UNLOQ.io User unlink", $content);
-            }
-        }
-        echo "User secret updated.";
-        exit;
-    }
 
     /* Performs access token login */
     private function accessToken() {
@@ -362,25 +216,7 @@ class UnloqUAuth
             wp_redirect(wp_login_url());
             exit;
         }
-        // If we have application linking enabled, we verify it.
-        if(UnloqConfig::get('app_linking')) {
-            $valid = $this->_verifyAppLinking($user, $res->data);
-            if($valid !== true) {
-                switch($valid) {
-                    case "NO_LINK":
-                        UnloqUtil::flash("Your device did not link correctly with the application. Please unlink your profile from this application and try again, or contact the site's administrator.");
-                        break;
-                    case "NO_LINK_DATA":
-                        UnloqUtil::flash("Your device failed to provide the application link credentials. Please unlink your profile from this application and try again, or contact the site's administrator.");
-                        break;
-                    case "INVALID_LINK":
-                        UnloqUtil::flash("The link between your device and this application has been tampered with. Please unlink your profile from this application and try again, or contact the site's administrator.");
-                        break;
-                }
-                wp_redirect(wp_login_url());
-                exit;
-            }
-        }
+
         // user created/read, we log him in
         $secure_cookie = false;
         if(FORCE_SSL_ADMIN) {
