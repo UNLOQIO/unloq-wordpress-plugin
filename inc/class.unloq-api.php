@@ -147,7 +147,21 @@ class UnloqApi
             $signature = $headers['X-Unloq-Signature'];
         }
         if(!is_string($path) || !is_array($data)) return false;
-        if(substr($path, 0, 1) !== "/") { $path = '/' . $path; }
+        if(substr($path, 0, 1) !== "/") {
+            try {
+                $tmp = parse_url($path);
+                if ($tmp) {
+                    $path = $tmp['path'];
+                    if($tmp['query']) {
+                        $path = $path.'?'.$tmp['query'];
+                    }
+                } else {
+                    $path = '/' . $path;
+                }
+            } catch (Exception $e) {
+                $path = '/' . $path;
+            }
+        }
         $sorted = array();
         foreach($data as $key => $value) {
             if($key == "unloq_uauth") continue;

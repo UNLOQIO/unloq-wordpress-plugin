@@ -2,7 +2,7 @@
 Contributors: unloqer
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, ios, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, unloq, password, passwordless, phone, secure, security, smartphone, ssl, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, authorization
 Requires at least: 3.5
-Tested up to: 4.2.1
+Tested up to: 4.7.3
 Stable tag: trunk
 License: MIT
 License URI: http://opensource.org/licenses/MIT

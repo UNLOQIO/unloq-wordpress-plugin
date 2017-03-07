@@ -43,7 +43,8 @@ $domain = $url[0] . "//" . $url[2];
                         <label for="unloqApiKey">Login Widget Key</label>
                     </th>
                     <td colspan="2">
-                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo (UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')) ?>"/>
+                        <?php $apiKey = (UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')); ?>
+                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo esc_attr($apiKey); ?>"/>
                     </td>
                 </tr>
             </table>
