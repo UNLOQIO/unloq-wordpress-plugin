@@ -11,16 +11,31 @@ UNLOQ provides a free, easy to use and integrate, strong authentication systems 
 
 == Description ==
 
+Looking to add Multi-factor authentication to your WordPress website?
+
 ## DESCRIPTION
 
-UNLOQ increases the security of your digital properties through a distributed authentication system that doesn’t require your users to remember any passwords. From now on you can forget about them wherever you see the UNLOQ login box. Just click the UNLOQ button and you’ll receive an authentication request on your phone for you to approve or deny.
+UNLOQ increases the security of your digital properties through a distributed authentication system that doesn’t require your users to remember any passwords. No more weak passwords and undesired logins.
 
-No connection on your phone? Lost phone? We’ve got you covered. Click the menu button on the bottom right corner to see the other login option the application allows. These might come either as time based one time password (you’ll find the code under the Tokens menu option in the UNLOQ app) or e-mail login.
+We verify your users’ identity and help them login through 3 Passwordless authentication options: 
+- Push notifications
+- Time-based one-time password
+- E-mail
 
-We believe it’s about your application & your users. Make the authentication system your own:
-- Personalize the appearance of the notification messages and choose a plugin theme to go with your design,
-- Set the data you want your users to provide when registering or signing in,
-- Determine what security measures works best for you. You may want to restrict the login backup methods, to request TOTP for each login, set up request origin paths and timers
+Your users will authenticate at the push of a button. Communicating with your users will also be much easier with the help of custom push notifications.
+
+You won’t have to worry about the security of your users’ data, as we use RSA 2048 and AES 256 for encryption. In the event of a lost connection, you’re also covered: choose another authentication option from the menu button (such as OTP or e-mail). 
+
+Stolen phone? You can deactivate your device at any moment, to protect data. 
+
+No connection on your phone? Lost phone? We’ve got you covered. Click the menu button on the bottom right corner of the widget to see the other login option the application allows. These might come either as time based one time password (you’ll find the code under the Tokens menu option in the UNLOQ app) or e-mail login.
+
+We believe it’s about your application & your users. Make the authentication system your own: 
+- Personalize the appearance of the notification messages and choose a plugin theme to go with your design
+- Set the data you want your users to provide when registering or signing in
+- etermine what security measures works best for you. You may want to restrict the login backup methods, to request TOTP for each login, set up request origin paths and timers.
+
+Want to take customization to the next level? You can generate your custom branded MFA Mobile App, for gaining a mobile presence and making it your own in no time. 
 
 == Installation ==
 
@@ -37,11 +52,15 @@ We believe it’s about your application & your users. Make the authentication s
  3. Install it
 
 ### Once activated
-1. Open the UNLOQ setup page
-2. Enter your API Key / Login Widget key and click the "SETUP" button.
->> Note: You must first register at https://unloq.io , create an organization, verify your site's domain and finally create an application. For more details, please visit https://unloq.io/developers/get-started/
-3. Choose which type of login you would want to allow (UNLOQ and/or regular passwords)
-4. Select the UNLOQ box theme.
+1. Login to UNLOQ at https://unloq.io/login
+2. Create a WordPress Web Application with your site's domain
+3. Configure the application (authentication mechanisms, design, etc.)
+4. Go to the application's Settings > Widgets section and verify your domain
+5. Go to the application's Settings > General > API Keys and add a new key. Make sure your app is in "Live" mode
+6. Enter the API Key and Login Widget Key of your app bellow.
+7. In your WordPress admin, choose which type of login you would want to allow (UNLOQ and/or regular passwords)
+
+Note: the API Key is visible only once. You can get the login widget key by selecting the "Get Script" action from the Login Widget.
 
 If you have any questions or installation issues, send us an e-mail at team@unloq.io . We will be happy to help you get started with UNLOQ.
 

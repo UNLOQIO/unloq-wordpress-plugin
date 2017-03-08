@@ -43,8 +43,8 @@ $domain = $url[0] . "//" . $url[2];
                         <label for="unloqApiKey">Login Widget Key</label>
                     </th>
                     <td colspan="2">
-                        <?php $apiKey = (UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')); ?>
-                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo esc_attr($apiKey); ?>"/>
+                        <?php $apiKey = esc_attr(UnloqUtil::body('api_key') ? UnloqUtil::body('api_key') : UnloqConfig::get('api_key')); ?>
+                        <input type="text" id="unloqApiKey" name="api_key" value="<?php echo $apiKey; ?>"/>
                     </td>
                 </tr>
             </table>
@@ -53,7 +53,7 @@ $domain = $url[0] . "//" . $url[2];
         </form>
         <br/>
         <p>
-            For more information about UNLOQ authentication, visit our <a href="http://unloq.readme.io/" target="_blank">documentation</a>.
+            For more information about UNLOQ authentication, visit our <a href="https://docs.unloq.io/plugins/wordpress" target="_blank">documentation</a>.
         </p>
     </div>
 </div>

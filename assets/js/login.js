@@ -14,7 +14,7 @@ jQuery(function($) {
     PLUGIN_THEME = $btn.attr("data-theme"),
     PLUGIN_KEY = $btn.attr("data-key");
   $btn.remove();
-  $form.wrap("<div class='tabs unloq-active'></div>");
+  $form.wrap("<div class='tabs'></div>");
   var $tabs = $form.parent();
   $tabs.prepend('<div class="unloq-login-box"></div>');
   $tabs.prepend("<div class='tab tab-unloq'><span>UNLOQ</span></div>");
