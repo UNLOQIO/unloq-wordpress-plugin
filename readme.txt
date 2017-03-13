@@ -56,11 +56,9 @@ Note: the API Key is visible only once. You can get the login widget key by sele
 If you have any questions or installation issues, send us an e-mail at team@unloq.io . We will be happy to help you get started with UNLOQ.
 
 == Screenshots ==
-1. UNLOQ.io Login plugin 
-2. UNLOQ.io Login plugin administrative settings
-3. UNLOQ.io Login plugin initial setup page
-4. UNLOQ.io Admin interface - Dashboard
-5. UNLOQ.io Authentication request
+1. UNLOQ.io Login widget
+2. UNLOQ.io Authentication request on your mobile device
+3. UNLOQ.io Administrative interface
 
 == Frequently Asked Questions ==
 
