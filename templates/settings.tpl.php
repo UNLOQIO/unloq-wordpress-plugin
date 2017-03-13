@@ -28,7 +28,7 @@
 
             <br/>
             <p class="helper">
-                You can find out more about the UNLOQ Login plugin <a href="http://unloq.readme.io/v1/docs/integration" target="_blank">here</a>.
+                You can find out more about the UNLOQ Login plugin <a href="https://docs.unloq.io/plugins/wordpress" target="_blank">here</a>.
             </p>
         </form>
     </div>

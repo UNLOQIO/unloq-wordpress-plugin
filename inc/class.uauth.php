@@ -23,11 +23,9 @@ class UnloqUAuth
         add_action("generate_rewrite_rules", array($this, "rewrite_rules"));
         add_filter('query_vars', array($this, "parse_query"));
         add_action('parse_request', array($this, "parse_request"));
-        if(function_exists('login_header') || function_exists('signup_user')) {
-            require_once(UNLOQ_PATH . "inc/class.login.php");
-            $login = new UnloqLogin();
-            add_action('init', array($login, 'init'));
-        }
+		require_once(UNLOQ_PATH . "inc/class.login.php");
+		$login = new UnloqLogin();
+		add_action('init', array($login, 'init'));
     }
 
     /* Makes sure that /uauth/login and /uauth/logout can be rewritten. */

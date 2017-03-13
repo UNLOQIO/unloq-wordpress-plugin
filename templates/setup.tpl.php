@@ -27,6 +27,11 @@ $domain = $url[0] . "//" . $url[2];
         <p>
             <i>Note</i>: the API Key is visible only once. You can get the login widget key by selecting the "Get Script" action from the Login Widget.
         </p>
+        <p>
+            <?php $current_user = wp_get_current_user(); ?>
+            <i>P.S</i>: Make sure to grant your UNLOQ.io e-mail account admin rights on this site, or create an UNLOQ account with the e-mail: <b><?php echo $current_user->user_email; ?></b>.
+            This is to avoid locking you out of your site.
+        </p>
         <form id="unloq-form" method="post" autocomplete="off">
             <?php wp_nonce_field('unloq_setup'); ?>
             <table class="form-table">

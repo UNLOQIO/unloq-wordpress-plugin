@@ -99,4 +99,7 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 
-
+== Changelog ==
+= 1.1.2 =
+* Updated the setup steps text
+* Do not restrict UNLOQ init only on wp-login.php and wp-register.php in order to load on all sites.
