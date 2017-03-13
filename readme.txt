@@ -62,7 +62,7 @@ If you have any questions or installation issues, send us an e-mail at team@unlo
 4. UNLOQ.io Admin interface - Dashboard
 5. UNLOQ.io Authentication request
 
-== FAQ ==
+== Frequently Asked Questions ==
 
 ### Is UNLOQ really free?
 The basic version is and will always be free. Your free account includes:
@@ -74,7 +74,7 @@ For more information about features and pricing, please visit us at https://unlo
 UNLOQ authentication system is offered under a freemium model. The basic plan is free and it will always be free, but we also offer premium plans that adds additional security features, detailed analytics and support features for your customers. You may want to consider them when implementing UNLOQ.
 
 ### Can existing users on my WordPress site sign in with UNLOQ after I install the plugin?
-Of course they can. As long as your users register on their UNLOQ mobile apps using the same e-mail address as their WordPress accounts, they can start using UNLOQ without any other configurations. 
+Of course they can. As long as your users register on their UNLOQ mobile apps using the same e-mail address as their WordPress accounts, they can start using UNLOQ without any other configurations.
 
 ### How do I add users?
 Depending on your setting to allow or not self registration (see in Wordpress > Settings > General) you could:
