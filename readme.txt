@@ -16,9 +16,14 @@ Looking to add Multi-factor authentication to your WordPress website?
 ## DESCRIPTION
 
 UNLOQ helps you increase security of your Wordpress user accounts through a system of three password-less authentication mechanisms:
+
 - Push notification (recommended)
+
 - Time-based one-time password (optional, recommended as a back-up option)
+
 - E-mail (optional, single factor)
+
+Full documentation available at: https://docs.unloq.io/plugins/wordpress
 
 Multi-factor authentication protects you from password re-use, phishing and keylogger attacks. No connection on your phone? We’ve got you covered. Click the menu button on the bottom right corner of the widget to see the other login option the application allows. Depending on your settings, these might come either as time based one time password (you’ll find the code under the Tokens menu option in the UNLOQ mobile app) or e-mail login (single factor, optional). In case of stolen phone you can deactivate your device at any moment, to protect data.
 
@@ -43,7 +48,7 @@ We've designed UNLOQ plugin so that anyone can install, configure and use it in 
  3. Install it
 
 ### Once activated
-1. Login to UNLOQ at https://unloq.io/login
+1. Login to UNLOQ at https://unloq.io/login and make sure to create an account with an email that already has access to your WordPress site
 2. Create a WordPress Web Application with your site's domain
 3. Configure the application (authentication mechanisms, design, etc.)
 4. Go to the application's Settings > Widgets section and verify your domain
