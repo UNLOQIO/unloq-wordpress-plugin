@@ -8,6 +8,9 @@ Description: Perform UNLOQ.io authentications with the click of a button
 */
 if (!defined('ABSPATH')) exit();
 
+require 'features/custom-login/unloq-custom-admin.php';
+add_action('plugins_loaded', array('UnloqCustomAdmin', 'getInstance'), 1);
+
 if (!defined('UNLOQ_BASE_PLUGIN')) define('UNLOQ_BASE_PLUGIN', true);
 require_once('unloq-init.php');
 add_action('init', 'unloq_start_session', 1);
