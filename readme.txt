@@ -98,7 +98,7 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
-= 1.2.0 =
+= 1.5.0 =
 * Fixed WooCommerce issues & other SSO plugins
 * Added custom login path
 * Added custom login logo and login page colors
