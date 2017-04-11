@@ -49,12 +49,10 @@ We've designed UNLOQ plugin so that anyone can install, configure and use it in 
 
 ### Once activated
 1. Login to UNLOQ at https://unloq.io/login and make sure to create an account with an email that already has access to your WordPress site
-2. Create a WordPress Web Application with your site's domain
-3. Configure the application (authentication mechanisms, design, etc.)
-4. Go to the application's Settings > Widgets section and verify your domain
-5. Go to the application's Settings > General > API Keys and add a new key. Make sure your app is in "Live" mode
-6. Enter the API Key and Login Widget Key of your app bellow.
-7. In your WordPress admin, choose which type of login you would want to allow (UNLOQ and/or regular passwords)
+2. Create a WordPress Web Application with your site's domain. Make sure the domain is publicly available.
+3. Enter the provided API Key and Widget Key in the UNLOQ WordPress plugin
+
+Optional: In your WordPress admin, choose which type of login you would want to allow (UNLOQ and/or regular passwords)
 
 Note: the API Key is visible only once. You can get the login widget key by selecting the "Get Script" action from the Login Widget.
 
@@ -100,6 +98,11 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.2.0 =
+* Fixed WooCommerce issues & other SSO plugins
+* Added custom login path
+* Added custom login logo and login page colors
+
 = 1.1.3 =
 * Updated plugin description, screenshots, FAQs
 

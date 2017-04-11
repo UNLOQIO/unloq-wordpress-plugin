@@ -2,11 +2,21 @@
 /*
 Plugin Name: UNLOQ.io authentication
 Plugin URI: https://unloq.io
-Version: 1.1.2
+Version: 1.2.0
 Author: UNLOQ.io
 Description: Perform UNLOQ.io authentications with the click of a button
 */
 if (!defined('ABSPATH')) exit();
+define( 'UNLOQ_PLUGIN_PATH', plugin_basename( __FILE__ ) );
+
+require 'features/custom-login/unloq-custom-admin.php';
+require 'features/custom-login-settings/unloq-custom-login-settings.php';
+require 'features/restrict-login-user-role/unloq-login-filter-instance.php';
+
+add_action('plugins_loaded', array('UnloqCustomAdmin', 'getInstance'), 1);
+add_action('plugins_loaded', array('UnloqCustomAdminSettings', 'getInstance'), 1);
+add_action('plugins_loaded', array('UnloqLoginFilterInstance', 'getInstance'), 1);
+
 
 if (!defined('UNLOQ_BASE_PLUGIN')) define('UNLOQ_BASE_PLUGIN', true);
 require_once('unloq-init.php');

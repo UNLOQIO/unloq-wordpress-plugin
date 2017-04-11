@@ -41,6 +41,10 @@ class UnloqConfig {
         return (self::get("is_setup") == "true");
     }
 
+    public static function isUnloqOnly() {
+        return (self::get("login_type") === "UNLOQ");
+    }
+
     public static function get($key, $default = null) {
         if(!self::$instance->loaded) {
             self::$instance->query();

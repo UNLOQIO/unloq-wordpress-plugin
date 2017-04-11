@@ -19,13 +19,10 @@ $domain = $url[0] . "//" . $url[2];
         <ul>
             <li>1. Login to UNLOQ</li>
             <li>2. Create a WordPress Web Application with the domain: <b><?php echo $domain; ?></b></li>
-            <li>3. Configure the application</li>
-            <li>4. Go to the application's Settings > Widgets section and verify your domain</li>
-            <li>5. Go to the application's Settings > General > API Keys and add a new key</li>
-            <li>6. Enter the API Key and Login Widget Key of your app bellow.</li>
+            <li>3. Enter the provided API Key and Widget Key in the form below.</li>
         </ul>
         <p>
-            <i>Note</i>: the API Key is visible only once. You can get the login widget key by selecting the "Get Script" action from the Login Widget.
+            <i>Note</i>: You can also customise your on-boarding experience by going your application's <i>Customise</i> menu, in the UNLOQ administration panel.
         </p>
         <p>
             <?php $current_user = wp_get_current_user(); ?>

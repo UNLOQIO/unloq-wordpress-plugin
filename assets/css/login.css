@@ -61,7 +61,7 @@ body.unloq-pass .tabs > .tab-line {
   transition: margin-left 0.2s ease-in-out;
 }
 body.unloq-pass .tabs.unloq-active {
-  height: 530px;
+  height: 532px;
 }
 body.unloq-pass .tabs.unloq-active > .tab-line {
   margin-left: 50%;
@@ -95,11 +95,11 @@ body.unloq-pass .tabs > .tab {
   display: inline-block;
   text-align: center;
 }
-body.unloq-pass .tabs > .unloq-login-box {
-  margin-top: 12px;
+body.unloq-pass .tabs.unloq-active > .unloq-login-box {
+  padding-top: 12px;
   position: absolute;
   width: 100%;
-  height: 450px;
+  min-height: 474px;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;

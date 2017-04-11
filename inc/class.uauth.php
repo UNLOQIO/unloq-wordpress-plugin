@@ -223,7 +223,7 @@ class UnloqUAuth
         }
         wp_set_current_user($user->ID);
         wp_set_auth_cookie($user->ID, false,  $secure_cookie);
-        do_action('wp_login', $user->user_login);
+        do_action('wp_login', $user->user_login, $user);
         $redirect_to = apply_filters('login_redirect', admin_url(), $requested_redirect_to, $user);
         if(!is_string($redirect_to) || $redirect_to == "") {
             $redirect_to = site_url();
