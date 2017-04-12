@@ -161,7 +161,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         global $pagenow;
         $currentPage = $pagenow;
         $hasRedirect = true;
-        if (is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
+        if (is_multisite() && is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
             $this->showNotFound();
         }
         // We check for backward-compatibility with no redirect path.

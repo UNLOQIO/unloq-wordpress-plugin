@@ -98,6 +98,10 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.1 =
+* Fixed UNLOQ-only enforcement on site administrators. It now applies only when the UNLOQ-only setting is active
+* Fixed wp-admin/ 404 messages for single-site installations, for users that are not authenticated and apply the default functionality
+
 = 1.5.0 =
 * Fixed WooCommerce issues & other SSO plugins
 * Added custom login path
