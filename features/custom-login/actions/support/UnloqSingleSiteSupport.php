@@ -37,6 +37,11 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         return sanitize_title_with_dashes($value);
     }
 
+    public function validateCustomExpose($val) {
+        if($val === "0") return "false";
+        return "true";
+    }
+
     /**
      * update path option
      */
@@ -65,6 +70,18 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
             echo '<code>' . trailingslashit(home_url()) . '?</code> 
                 <input id="unloq_custom_admin_url" type="text" name="unloq_custom_admin_url" value="' . $this->newLoginSlug() . '">';
         }
+    }
+
+    /*
+     * Render expose wp-admin
+     * */
+    public function renderExposeInput() {
+        $val = get_option("unloq_custom_admin_expose");
+        if($val === false) $val = "true";   // defaults to yes.
+        echo '<select name="unloq_custom_admin_expose" id="unloq_custom_admin_expose">
+                 <option value="1" '.($val == "true" ? 'selected="selected"' : '').'>Yes</option>
+                 <option value="0" '.($val == "false" ? 'selected="selected"' : '').'>No</option>
+               </select>';
     }
 
     /**
@@ -99,6 +116,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
      */
     public function adminInit()
     {
+        // Add the default login url path
         add_settings_section('wps-hide-login-section', $this::TITLE,
             array($this, 'unloqSectionDescription'), 'general');
         add_settings_field('unloq_custom_admin_url',
@@ -107,6 +125,13 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
 
         register_setting('general', 'unloq_custom_admin_url',
             array($this, 'validateCustomPath'));
+
+        // Add the "Do not expose wp-admin/" option
+        add_settings_field('unloq_custom_admin_expose',
+            '<label for="unloq_custom_admin_expose">' . $this->translate('Expose wp-admin/') . '</label>',
+            array($this, 'renderExposeInput'), 'general', 'wps-hide-login-section');
+        register_setting('general', 'unloq_custom_admin_expose',
+            array($this, 'validateCustomExpose'));
 
         if (get_option('unloq_custom_admin_redirect')) {
             delete_option('unloq_custom_admin_redirect');
@@ -161,7 +186,9 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         global $pagenow;
         $currentPage = $pagenow;
         $hasRedirect = true;
-        if (is_multisite() && is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
+        $exposeWpAdmin = get_option("unloq_custom_admin_expose");
+        if($exposeWpAdmin === false) $exposeWpAdmin = "true";
+        if ($exposeWpAdmin === "false" && is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
             $this->showNotFound();
         }
         // We check for backward-compatibility with no redirect path.

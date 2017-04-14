@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.3 =
+* Added the "Expos wp-admin/" functionality. If set to false, un-authenticated users that land on wp-admin/ will get a 404 in stead of the redirect to the login page. By default, this feature is disabled.
+
 = 1.5.2 =
 * Token parsing now takes place right after the "init" hook, and now looks directly into the server's querystring for the unloq_uauth key. Previously this was done using the "parse_request" hook, but quite a few plugins abuse of that hook and were stopping the UNLOQ authentication
 * Updated the error message for expired tokens to include a bit more information
