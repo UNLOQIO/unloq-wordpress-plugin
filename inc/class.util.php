@@ -146,6 +146,17 @@ class UnloqUtil
         return true;
     }
 
+    public static function getQuery()
+    {
+        $str = $_SERVER['QUERY_STRING'];
+        $qs = array();
+        try {
+            parse_str($str, $qs);
+        } catch (Exception $e) {
+        }
+        return $qs;
+    }
+
     /*
      * Generate a random string with the given length
      * */

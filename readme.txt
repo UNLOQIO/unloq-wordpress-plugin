@@ -98,6 +98,10 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.2 =
+* Token parsing now takes place right after the "init" hook, and now looks directly into the server's querystring for the unloq_uauth key. Previously this was done using the "parse_request" hook, but quite a few plugins abuse of that hook and were stopping the UNLOQ authentication
+* Updated the error message for expired tokens to include a bit more information
+
 = 1.5.1 =
 * Fixed UNLOQ-only enforcement on site administrators. It now applies only when the UNLOQ-only setting is active
 * Fixed wp-admin/ 404 messages for single-site installations, for users that are not authenticated and apply the default functionality

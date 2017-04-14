@@ -112,7 +112,7 @@ class UnloqApi
      * */
     public function getLoginToken($token, $sid = null, $duration = null) {
         if (!is_string($token) || strlen($token) < 129) {
-            return new UnloqError("The UAuth access token is not valid", "ACCESS_TOKEN");
+            return new UnloqError("The UNLOQ access token is not valid or expired. Please try again.", "ACCESS_TOKEN");
         }
         $data = array("token" => $token);
         if (is_string($sid)) {
@@ -125,7 +125,7 @@ class UnloqApi
         if (!$res->error) {
             // We verify the data integrity.
             if (!isset($res->data['id']) || !isset($res->data['email'])) {
-                return new UnloqError("The UAuth response does not contain login information.", "API_ERROR");
+                return new UnloqError("The UNLOQ auth token does not contain login information. Please try again.", "API_ERROR");
             }
         }
         return $res;
