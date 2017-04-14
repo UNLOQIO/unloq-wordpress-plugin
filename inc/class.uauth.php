@@ -26,7 +26,7 @@ class UnloqUAuth
         $login = new UnloqLogin();
         add_action("generate_rewrite_rules", array($this, "rewrite_rules"));
         add_action('init', array($login, 'init'), 1);
-        add_action("init", array($this, "parse_request"), 2);
+        add_action("init", array($this, "parse_request"), 1);
     }
 
     /* Makes sure that /uauth/login and /uauth/logout can be rewritten. */
