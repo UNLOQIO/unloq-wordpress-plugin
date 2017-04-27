@@ -59,7 +59,7 @@ class UnloqSetup {
         delete_option("UNLOQ_ACTIVE");
     }
 
-    private function register_hooks() {
+    public static function register_hooks() {
         register_activation_hook(UNLOQ_PATH . 'unloq.php', array('UnloqSetup', 'activate_plugin'));
         register_deactivation_hook(UNLOQ_PATH . 'unloq.php', array('UnloqSetup', 'deactivate_plugin'));
         register_uninstall_hook(UNLOQ_PATH . 'unloq.php', array('UnloqSetup', 'uninstall_plugin'));

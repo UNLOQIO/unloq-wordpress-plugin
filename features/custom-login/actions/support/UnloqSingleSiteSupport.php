@@ -48,7 +48,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
     public function updatePathOptions()
     {
         if ($_GET['page'] == $this::SUBMENU_SECTION_SLUG) {
-            if ($_POST['unloq_custom_admin_url'] && ($unloq_custom_admin_url = sanitize_title_with_dashes($_POST['unloq_custom_admin_url']))
+            if (isset($_POST['unloq_custom_admin_url']) && ($unloq_custom_admin_url = sanitize_title_with_dashes($_POST['unloq_custom_admin_url']))
                 && !in_array($unloq_custom_admin_url, $this->forbiddenSlugs())
             ) {
                 update_site_option('unloq_custom_admin_url', $this->validateCustomPath($unloq_custom_admin_url));

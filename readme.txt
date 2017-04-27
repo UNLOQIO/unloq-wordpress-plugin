@@ -98,6 +98,10 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.4 =
+* Fixed $_POST variable checking to supress warnings
+* Fixed register_hooks() function to be static
+
 = 1.5.3 =
 * Added the "Expos wp-admin/" functionality. If set to false, un-authenticated users that land on wp-admin/ will get a 404 in stead of the redirect to the login page. By default, this feature is disabled.
 
