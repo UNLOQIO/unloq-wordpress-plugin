@@ -148,13 +148,7 @@ class UnloqUtil
 
     public static function getQuery()
     {
-        $str = $_SERVER['QUERY_STRING'];
-        $qs = array();
-        try {
-            parse_str($str, $qs);
-        } catch (Exception $e) {
-        }
-        return $qs;
+        return $_GET;
     }
 
     /*

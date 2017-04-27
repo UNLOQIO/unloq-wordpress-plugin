@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.5 =
+* util->getQuery() now works with $_GET in stead of $_SERVER
+
 = 1.5.4 =
 * Fixed $_POST variable checking to supress warnings
 * Fixed register_hooks() function to be static
