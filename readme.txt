@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.7 =
+* Fixed static declaration to use array() constructor
+
 = 1.5.6 =
 * Fixed $_GET non-isset() checked variable
 

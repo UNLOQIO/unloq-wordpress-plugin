@@ -9,13 +9,11 @@ class UnloqLoginFilter
      * add any roles to block from any path besides
      * wp-admin or custom path for admin login
      */
-    public static $RESTRICTED_ROLES = [
+    public static $RESTRICTED_ROLES = array(
         'administrator',
         'editor',
-        'author',
-        //contributor',
-        //'subscriber'
-    ];
+        'author'
+    );
 
     /**
      * LoginFilter constructor.
