@@ -1,19 +1,47 @@
 /*
 * Included when the site uses both UNLOQ and password login. This is used to perform the toggle.
 * */
-jQuery(function($) {
-  var $btn = $("#btnInitUnloq"),
-    $login = $("#login"),
-    $form = $login.find("form").first();
-  if($login.size() === 0 || $btn.size() === 0) {
-    // something went wrong.
-    console.error('UNLOQ Failed to initialize, the login form was no-where to be found.');
-    return;
+(function() {
+  var JQUERY_INTEGRITY = 'sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=';
+  var JQUERY_URL = "https://code.jquery.com/jquery-1.12.4.min.js";
+
+  if (typeof window.jQuery === 'object' && window.jQuery && typeof window.jQuery.noConflict === 'function') {
+    loadPlugin(window.jQuery.noConflict());
+  } else {
+    var script = document.createElement('script');
+    script.onload = function() {
+      loadPlugin(jQuery.noConflict());
+    };
+    script.onerror = function() {
+      console.error('Could not load jQuery dependency');
+    };
+    script.integrity = JQUERY_INTEGRITY;
+    try {
+      script.setAttribute('integrity', JQUERY_INTEGRITY);
+    } catch (e) {
+    }
+    script.crossorigin = "anonymous";
+    try {
+      script.setAttribute('crossorigin', 'anonymous');
+    } catch (e) {
+    }
+    script.src = JQUERY_URL;
+    document.getElementsByTagName('head')[0].appendChild(script);
   }
-  var PLUGIN_URL = $btn.attr("data-script"),
-    PLUGIN_THEME = $btn.attr("data-theme"),
-    PLUGIN_KEY = $btn.attr("data-key");
-  $btn.remove();
+
+  function loadPlugin($) {
+    var $btn = $("#btnInitUnloq"),
+      $login = $("#login"),
+      $form = $login.find("form").first();
+  if($login.size() === 0 || $btn.size() === 0) {
+      // something went wrong.
+      console.error('UNLOQ Failed to initialize, the login form was no-where to be found.');
+      return;
+    }
+    var PLUGIN_URL = $btn.attr("data-script"),
+      PLUGIN_THEME = $btn.attr("data-theme"),
+      PLUGIN_KEY = $btn.attr("data-key");
+    $btn.remove();
   $form.wrap("<div class='tabs'></div>");
   var $tabs = $form.parent();
   $tabs.prepend('<div class="unloq-login-box"></div>');
@@ -54,8 +82,10 @@ jQuery(function($) {
       $parent.addClass('password-active');
     }
   }
+
   $tabs.on('click touchstart', '> .tab', onChange);
   if($tabs.hasClass('unloq-active')) {
-    initialize();
+      initialize();
+    }
   }
-});
+})();

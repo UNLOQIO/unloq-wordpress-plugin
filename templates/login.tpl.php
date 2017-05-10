@@ -12,7 +12,7 @@ if($unloq_type == "UNLOQ") { ?>
 <?php
 // Login with UNLOQ or passwords
 if ($unloq_type == "UNLOQ_PASS") {
-    UnloqUtil::register_js('login', array('jquery'));
+    UnloqUtil::register_js('login', 'jquery');
 ?>
     <div id="btnInitUnloq" class="unloq-init" data-script="<?php echo UnloqApi::PLUGIN_LOGIN; ?>" data-theme="<?php echo $unloq_theme; ?>" data-key="<?php echo $unloq_api_key; ?>"></div>
 

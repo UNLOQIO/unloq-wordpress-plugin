@@ -117,8 +117,11 @@ class UnloqUtil
         if (!wp_script_is($name, 'registered')) {
             wp_register_script($name, $url, $dep);
         }
-        if (!wp_script_is($name, 'enqueued')) {
+        if(!wp_script_is($name, 'enqueued')) {
             wp_enqueue_script($name);
+        }
+        if($dep != null && !wp_script_is($dep)) {
+            wp_enqueue_script($dep);
         }
         return $name;
     }
