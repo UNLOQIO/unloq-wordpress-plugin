@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.9 =
+* The login.js file now automatically handles the token redirect without relying on the widget URL.
+
 = 1.5.8 =
 * Login JS script is now correctly enqueue and check for correct jQuery version to avoid theme conflicts
 
