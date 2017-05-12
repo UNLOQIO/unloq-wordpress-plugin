@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.12 =
+* Fixed an issue where all-in-one-wp-security-and-firewall plugin interferes with the login flow.
+
 = 1.5.11 =
 * Updated the authentication flow to prevent redirect loop
 

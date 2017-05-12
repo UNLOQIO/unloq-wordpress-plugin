@@ -216,10 +216,6 @@ class UnloqUAuth
             wp_redirect(wp_login_url());
             exit;
         }
-        $reauth = empty($_REQUEST['reauth']) ? false : true;
-        if($reauth) {
-            wp_clear_auth_cookie();
-        }
         // user created/read, we log him in
         $secure_cookie = is_ssl();
         if (FORCE_SSL_ADMIN) {
