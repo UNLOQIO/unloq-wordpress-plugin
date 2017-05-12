@@ -41,7 +41,7 @@
     var PLUGIN_URL = $btn.attr("data-script"),
       PLUGIN_THEME = $btn.attr("data-theme"),
       PLUGIN_KEY = $btn.attr("data-key");
-    //$btn.remove();
+    $btn.remove();
     $form.wrap("<div class='tabs'></div>");
     var $tabs = $form.parent();
     $tabs.prepend('<div class="unloq-login-box"></div>');

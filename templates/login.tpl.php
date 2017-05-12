@@ -6,6 +6,19 @@ $unloq_script = '<script type="text/javascript" src="' . UnloqApi::PLUGIN_LOGIN 
 if($unloq_type == "UNLOQ") { ?>
     <div class="unloq-login-box">
         <?php echo $unloq_script; ?>
+        <script type="text/javascript">
+            (function() {
+                if(typeof window.UNLOQ !== 'object' || !window.UNLOQ || typeof window.UNLOQ.onLogin !== 'function') return;
+                window.UNLOQ.onLogin(function(data) {
+                    if(typeof data !== 'object' || !data) return;
+                    if(typeof data.token !== 'string' || !data.token) return;
+                    var redirUrl = window.location.href;
+                    redirUrl += (redirUrl.indexOf('?') === -1 ? '?' : '&');
+                    redirUrl += 'unloq_uauth=login&token=' + data.token;
+                    window.location.href = redirUrl;
+                });
+            })();
+        </script>
     </div>
 <?php } ?>
 

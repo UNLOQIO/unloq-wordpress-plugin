@@ -216,16 +216,18 @@ class UnloqUAuth
             wp_redirect(wp_login_url());
             exit;
         }
-
+        $reauth = empty($_REQUEST['reauth']) ? false : true;
+        if($reauth) {
+            wp_clear_auth_cookie();
+        }
         // user created/read, we log him in
-        $secure_cookie = false;
+        $secure_cookie = is_ssl();
         if (FORCE_SSL_ADMIN) {
             $secure_cookie = true;
             force_ssl_admin(true);
         }
-        wp_set_current_user($user->ID);
         wp_set_auth_cookie($user->ID, false, $secure_cookie);
-        do_action('wp_login', $user->user_login, $user);
+        wp_set_current_user($user->ID, $user->user_login);
         $redirect_to = apply_filters('login_redirect', admin_url(), $requested_redirect_to, $user);
         if (!is_string($redirect_to) || $redirect_to == "") {
             $redirect_to = site_url();
