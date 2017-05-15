@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.14 =
+* Fixed issues with PHP < 5.3 for class constants accessing
+
 = 1.5.12 =
 * Fixed an issue where all-in-one-wp-security-and-firewall plugin interferes with the login flow.
 

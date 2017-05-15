@@ -63,7 +63,7 @@ class UnloqSettings {
 
     private static function update($data) {
         $errs = UnloqConfig::set(array(
-            'theme' => $data['theme'],
+            'theme' => isset($data['theme']) ? $data['theme'] : "light",
             'login_type' => $data['login_type']
         ));
         if ($errs) {

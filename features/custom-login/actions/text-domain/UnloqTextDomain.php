@@ -19,7 +19,7 @@ class UnloqTextDomain extends UnloqCustomAdminBase
      */
     public function loadTextDomain()
     {
-        load_plugin_textdomain($this::LOCALE_REGISTRATION, false,
+        load_plugin_textdomain(UnloqTextDomain::LOCALE_REGISTRATION, false,
             dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
@@ -30,7 +30,7 @@ class UnloqTextDomain extends UnloqCustomAdminBase
      */
     protected function translate($string = '')
     {
-        return __($string, $this::LOCALE_REGISTRATION);
+        return __($string, UnloqTextDomain::LOCALE_REGISTRATION);
     }
 
 }

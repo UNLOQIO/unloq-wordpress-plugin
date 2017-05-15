@@ -47,7 +47,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
      */
     public function updatePathOptions()
     {
-        if (isset($_GET['page']) && $_GET['page'] == $this::SUBMENU_SECTION_SLUG) {
+        if (isset($_GET['page']) && $_GET['page'] == UnloqCustomAdminActions::SUBMENU_SECTION_SLUG) {
             if (isset($_POST['unloq_custom_admin_url']) && ($unloq_custom_admin_url = sanitize_title_with_dashes($_POST['unloq_custom_admin_url']))
                 && !in_array($unloq_custom_admin_url, $this->forbiddenSlugs())
             ) {
@@ -91,11 +91,11 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
     {
         $out = '';
         if (!is_multisite() || is_super_admin()) {
-            $out .= $this->translate($this::ADMIN_HELP_DESCRIPTION);
+            $out .= $this->translate(self::ADMIN_HELP_DESCRIPTION);
         }
 
         if (is_multisite() && is_super_admin() && is_plugin_active_for_network($this->basename())) {
-            $out .= sprintf($this->translate($this::WPMU_HELP_DESCRIPTION),
+            $out .= sprintf($this->translate(self::WPMU_HELP_DESCRIPTION),
                 $this->getNetwordAdminUrlSettings());
         }
         echo "<p>$out</p>";
@@ -117,7 +117,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
     public function adminInit()
     {
         // Add the default login url path
-        add_settings_section('wps-hide-login-section', $this::TITLE,
+        add_settings_section('wps-hide-login-section', self::TITLE,
             array($this, 'unloqSectionDescription'), 'general');
         add_settings_field('unloq_custom_admin_url',
             '<label for="unloq_custom_admin_url">' . $this->translate('Login url') . '</label>',

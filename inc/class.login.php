@@ -26,6 +26,16 @@ class UnloqLogin
         add_action('login_body_class', array($this, "initClasses"));
     }
 
+    public function wp_login_errors($errors) {
+        $flashes = UnloqUtil::flash();
+        foreach ($flashes as $err) {
+            if($err['type'] == 'error') {
+                $errors->add('unloq_error', $err['message']);
+            }
+        }
+        return $errors;
+    }
+
     /*
      * Called when the request starts.
      * */
@@ -40,15 +50,7 @@ class UnloqLogin
             // we place any errors we've got in the flash in the errors section.
             $flashes = UnloqUtil::flash(false);
             if (count($flashes) > 0) {
-                add_filter('wp_login_errors', function ($errors) {
-                    $flashes = UnloqUtil::flash();
-                    foreach ($flashes as $err) {
-                        if($err['type'] == 'error') {
-                            $errors->add('unloq_error', $err['message']);
-                        }
-                    }
-                    return $errors;
-                });
+                add_filter('wp_login_errors', $this->wp_login_errors);
             }
             return;
         }

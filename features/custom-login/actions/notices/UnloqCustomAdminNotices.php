@@ -35,7 +35,7 @@ class UnloqCustomAdminNotices extends UnloqTextDomain
      */
     public function adminNoticesIncompatible()
     {
-        echo $this->addErrorNotice($this::ERROR_INCOMPATIBLE);
+        echo $this->addErrorNotice(UnloqCustomAdminNotices::ERROR_INCOMPATIBLE);
     }
 
     /**
@@ -51,7 +51,7 @@ class UnloqCustomAdminNotices extends UnloqTextDomain
             && $slug !== 'wp-login.php'
         ) {
             echo '<div class="updated notice is-dismissible"><p>' .
-                sprintf($this->translate($this::ADMIN_NOTICE_CHANGE_PATH),
+                sprintf($this->translate(UnloqCustomAdminNotices::ADMIN_NOTICE_CHANGE_PATH),
                     $this->getNewLoginUrl(),
                     $this->getNewLoginUrl())
                 . '</p></div>';
@@ -63,7 +63,7 @@ class UnloqCustomAdminNotices extends UnloqTextDomain
      */
     public function adminNoticesPluginConflict()
     {
-        echo $this->addErrorNotice($this::ERROR_CONFLICT);
+        echo $this->addErrorNotice(UnloqCustomAdminNotices::ERROR_CONFLICT);
     }
 
     /**

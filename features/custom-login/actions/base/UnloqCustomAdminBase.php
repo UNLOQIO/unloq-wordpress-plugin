@@ -52,7 +52,7 @@ class UnloqCustomAdminBase
      */
     protected function getOptionPrefix()
     {
-        return $this::OPTION_PREFIX;
+        return UnloqCustomAdminBase::OPTION_PREFIX;
     }
 
     /**
@@ -62,7 +62,7 @@ class UnloqCustomAdminBase
     public function getNewLoginUrl($scheme = null)
     {
         $slug = $this->newLoginSlug();
-        if($slug === 'wp-login.php') {
+        if ($slug === 'wp-login.php') {
             return home_url('/', $scheme) . $slug;
         }
         if ($this->getPermalinkStructure()) {
@@ -85,7 +85,7 @@ class UnloqCustomAdminBase
                 return $slug;
             }
         }
-        return $this::DEFAULT_SLUG_LOGIN;
+        return UnloqCustomAdminBase::DEFAULT_SLUG_LOGIN;
     }
 
     /**
@@ -113,7 +113,7 @@ class UnloqCustomAdminBase
      */
     protected function getSlugOption()
     {
-        return get_option($this::SLUG_OPTION);
+        return get_option(UnloqCustomAdminBase::SLUG_OPTION);
     }
 
     /**
@@ -121,7 +121,7 @@ class UnloqCustomAdminBase
      */
     protected function getSiteSlugOption()
     {
-        return get_site_option($this::SLUG_OPTION, $this::DEFAULT_SLUG_LOGIN);
+        return get_site_option(UnloqCustomAdminBase::SLUG_OPTION, UnloqCustomAdminBase::DEFAULT_SLUG_LOGIN);
     }
 
     /**

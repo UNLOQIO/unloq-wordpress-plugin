@@ -125,11 +125,11 @@ class UnloqCustomAdminActions extends UnloqCustomAdminFilters
     function unloqCustomAdminPath()
     {
         add_submenu_page(
-            $this::MENU_HOOK_SLUG,
+            UnloqCustomAdminActions::MENU_HOOK_SLUG,
             '',
-            $this::SECTION_TITLE,
+            UnloqCustomAdminActions::SECTION_TITLE,
             'manage_options',
-            $this::SUBMENU_SECTION_SLUG,
+            UnloqCustomAdminActions::SUBMENU_SECTION_SLUG,
             array($this, 'unloqCustomAdminPathPageHtml')
         );
     }
@@ -144,18 +144,18 @@ class UnloqCustomAdminActions extends UnloqCustomAdminFilters
         do_action('unloq_notices');
         ?>
         <div class="wrap">
-            <h1><?php echo $this::SECTION_TITLE ?></h1>
+            <h1><?php echo UnloqCustomAdminActions::SECTION_TITLE ?></h1>
             <div class="card unloq-card">
                 <h1><?= esc_html(get_admin_page_title()); ?></h1>
-                <form action="admin.php?page=<?php echo $this::SUBMENU_SECTION_SLUG ?>"
+                <form action="admin.php?page=<?php echo UnloqCustomAdminActions::SUBMENU_SECTION_SLUG ?>"
                       method="post">
                     <?php
                     do_action('unloq_custom_admin_path_settings');
                     // output security fields for the registered setting "wporg_options"
-                    settings_fields($this::SUBMENU_SECTION_SLUG . '_options');
+                    settings_fields(UnloqCustomAdminActions::SUBMENU_SECTION_SLUG . '_options');
                     // output setting sections and their fields
                     // (sections are registered for "wporg", each field is registered to a specific section)
-                    do_settings_sections($this::SUBMENU_SECTION_SLUG);
+                    do_settings_sections(UnloqCustomAdminActions::SUBMENU_SECTION_SLUG);
                     // output save settings button
 
                     ?>
@@ -176,11 +176,11 @@ class UnloqCustomAdminActions extends UnloqCustomAdminFilters
     {
         $out = '';
         if (!is_multisite() || is_super_admin()) {
-            $out .= $this->translate($this::ADMIN_HELP_DESCRIPTION);
+            $out .= $this->translate(self::ADMIN_HELP_DESCRIPTION);
         }
 
         if (is_multisite() && is_super_admin() && is_plugin_active_for_network($this->basename())) {
-            $out .= sprintf($this->translate($this::WPMU_HELP_DESCRIPTION),
+            $out .= sprintf($this->translate(self::WPMU_HELP_DESCRIPTION),
                 $this->getNetwordAdminUrlSettings());
         }
         echo "<p>$out</p>";

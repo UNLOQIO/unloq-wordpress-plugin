@@ -45,7 +45,7 @@ class UnloqCustomLoginSettings extends UnloqCustomLoginRemoveDefaultLogo
      */
     public function updateSettings()
     {
-        if (isset($_GET['page']) && $_GET['page'] == $this::SUBMENU_SECTION_SLUG) {
+        if (isset($_GET['page']) && $_GET['page'] == UnloqCustomLoginSettings::SUBMENU_SECTION_SLUG) {
             if (isset($_POST['unloq__login_logo']) && ($unloq_custom_admin_logo = $_POST['unloq__login_logo'])) {
                 update_site_option('unloq__login_logo',
                     $unloq_custom_admin_logo);

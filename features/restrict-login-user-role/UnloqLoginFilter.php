@@ -40,7 +40,7 @@ class UnloqLoginFilter
             return null;
         }
         if (!$this->isAdminLoginPage() && UnloqConfig::isUnloqOnly()) {
-            foreach ($this::$RESTRICTED_ROLES as $role) {
+            foreach (UnloqLoginFilter::$RESTRICTED_ROLES as $role) {
                 foreach ($user->roles as $userRole) {
                     if ($userRole == $role) {
                         return null;

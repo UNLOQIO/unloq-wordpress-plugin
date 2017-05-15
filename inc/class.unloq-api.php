@@ -26,9 +26,9 @@ class UnloqApi
      * */
     private function getPath($path, $withVersion = true) {
         if (!$withVersion) {
-            return $this::API_URL . $path;
+            return UnloqApi::API_URL . $path;
         }
-        $full = $this::API_URL . '/v' . $this::API_VERSION . $path;
+        $full = UnloqApi::API_URL . '/v' . UnloqApi::API_VERSION . $path;
         return $full;
     }
 
@@ -84,9 +84,9 @@ class UnloqApi
         $fullPath = UnloqUtil::getUrlPath($fullUrl);
         switch($which) {
             case "login":
-                return $fullPath . self::HOOK_LOGIN;
+                return $fullPath . UnloqApi::HOOK_LOGIN;
             case "logout":
-                return $fullPath . self::HOOK_LOGOUT;
+                return $fullPath . UnloqApi::HOOK_LOGOUT;
             default:
                 return null;
         }
