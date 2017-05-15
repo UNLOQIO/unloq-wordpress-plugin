@@ -5,16 +5,13 @@ body.unloq-only p.message {
   margin-right: 55px;
 }
 body.unloq-only #login {
-  min-width: 340px;
-  max-width: 450px;
-  width: auto;
+  width: 384px;
 }
 body.unloq-only #login form {
   box-shadow: none;
   -webkit-box-shadow: none;
   background: transparent;
   padding-bottom: 0;
-  margin-top: 0;
 }
 body.unloq-only #login form .unloq-login {
   margin: 0 auto;
