@@ -124,6 +124,7 @@ class UnloqCustomAdminActions extends UnloqCustomAdminFilters
      */
     function unloqCustomAdminPath()
     {
+        if (class_exists('ITSEC_Core')) return;
         add_submenu_page(
             UnloqCustomAdminActions::MENU_HOOK_SLUG,
             '',

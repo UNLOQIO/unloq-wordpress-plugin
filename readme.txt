@@ -98,6 +98,12 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.16 =
+* Custom login path is completely disabled while iTheme Security plugin is active. This is to avoid login issues and incompatibilities between plugins.
+
+= 1.5.15 =
+* Custom login path is now compatible with the iTheme Security plugin
+
 = 1.5.14 =
 * Fixed issues with PHP < 5.3 for class constants accessing
 

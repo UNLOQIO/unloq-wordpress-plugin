@@ -27,18 +27,21 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
     public function addWordpressInitActions()
     {
         add_action('admin_init', array($this, 'adminInit'), 2);
-        add_action('plugins_loaded', array($this, 'pluginsLoaded'), 2);
-        add_action('wp_loaded', array($this, 'wpLoaded'));
+        if (!class_exists('ITSEC_Core')) {
+            add_action('plugins_loaded', array($this, 'pluginsLoaded'), 2);
+            add_action('wp_loaded', array($this, 'wpLoaded'));
+        }
     }
 
     public function validateCustomPath($value)
     {
-        if($value === 'wp-login.php' || $value === 'wp-login-php') return "wp-login.php";
+        if ($value === 'wp-login.php' || $value === 'wp-login-php') return "wp-login.php";
         return sanitize_title_with_dashes($value);
     }
 
-    public function validateCustomExpose($val) {
-        if($val === "0") return "false";
+    public function validateCustomExpose($val)
+    {
+        if ($val === "0") return "false";
         return "true";
     }
 
@@ -75,12 +78,13 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
     /*
      * Render expose wp-admin
      * */
-    public function renderExposeInput() {
+    public function renderExposeInput()
+    {
         $val = get_option("unloq_custom_admin_expose");
-        if($val === false) $val = "true";   // defaults to yes.
+        if ($val === false) $val = "true";   // defaults to yes.
         echo '<select name="unloq_custom_admin_expose" id="unloq_custom_admin_expose">
-                 <option value="1" '.($val == "true" ? 'selected="selected"' : '').'>Yes</option>
-                 <option value="0" '.($val == "false" ? 'selected="selected"' : '').'>No</option>
+                 <option value="1" ' . ($val == "true" ? 'selected="selected"' : '') . '>Yes</option>
+                 <option value="0" ' . ($val == "false" ? 'selected="selected"' : '') . '>No</option>
                </select>';
     }
 
@@ -119,9 +123,11 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         // Add the default login url path
         add_settings_section('wps-hide-login-section', self::TITLE,
             array($this, 'unloqSectionDescription'), 'general');
-        add_settings_field('unloq_custom_admin_url',
-            '<label for="unloq_custom_admin_url">' . $this->translate('Login url') . '</label>',
-            array($this, 'renderInput'), 'general', 'wps-hide-login-section');
+        if (!class_exists('ITSEC_Core')) {
+            add_settings_field('unloq_custom_admin_url',
+                '<label for="unloq_custom_admin_url">' . $this->translate('Login url') . '</label>',
+                array($this, 'renderInput'), 'general', 'wps-hide-login-section');
+        }
 
         register_setting('general', 'unloq_custom_admin_url',
             array($this, 'validateCustomPath'));
@@ -157,7 +163,6 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         if (!is_multisite() && ($this->isWpSignUp() || $this->isWpActivate()) !== false) {
             $this->showNotFound();
         }
-
         $request = parse_url($_SERVER['REQUEST_URI']);
         if ((strpos($_SERVER['REQUEST_URI'],
                     'wp-login.php') !== false || untrailingslashit($request['path']) === site_url('wp-login',
@@ -187,7 +192,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         $currentPage = $pagenow;
         $hasRedirect = true;
         $exposeWpAdmin = get_option("unloq_custom_admin_expose");
-        if($exposeWpAdmin === false) $exposeWpAdmin = "true";
+        if ($exposeWpAdmin === false) $exposeWpAdmin = "true";
         if ($exposeWpAdmin === "false" && is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
             $this->showNotFound();
         }
@@ -197,6 +202,17 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
             $hasRedirect = false;
         }
         $request = parse_url($_SERVER['REQUEST_URI']);
+        try {
+            $newLoginUrl = $this->getNewLoginUrl();
+            $parsedLoginUrl = parse_url($newLoginUrl);
+            if (isset($request['path']) && isset($parsedLoginUrl['path']) && ($request['path'] === $parsedLoginUrl['path'] || $request['path'] . '/' === $parsedLoginUrl['path'])) {
+                $this->wp_login_php = true;
+                global $error, $interim_login, $action, $user_login;
+                @require_once ABSPATH . 'wp-login.php';
+                die;
+            }
+        } catch (Exception $e) {
+        }
         if ($currentPage === 'wp-login.php' && $request['path'] !== $this->userTrailingslashit($request['path']) && $this->getPermalinkStructure()) {
             wp_safe_redirect($this->userTrailingslashit($this->getNewLoginUrl()) . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
             die;

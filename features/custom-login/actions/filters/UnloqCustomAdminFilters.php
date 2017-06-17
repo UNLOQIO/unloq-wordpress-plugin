@@ -18,10 +18,12 @@ class UnloqCustomAdminFilters extends UnloqWpmuSupport
     public function addFilters()
     {
         add_filter('plugin_action_links_' . $this->basename(), array($this, 'pluginActionLinks'));
-        add_filter('site_url', array($this, 'siteUrl'), 10, 4);
-        add_filter('network_site_url', array($this, 'networkSiteUrl'), 10, 3);
-        add_filter('wp_redirect', array($this, 'wpRedirect'), 10, 2);
-        add_filter('site_option_welcome_email', array($this, 'welcomeEmail'));
+        if (!class_exists('ITSEC_Core')) {
+            add_filter('site_url', array($this, 'siteUrl'), 10, 4);
+            add_filter('network_site_url', array($this, 'networkSiteUrl'), 10, 3);
+            add_filter('wp_redirect', array($this, 'wpRedirect'), 10, 2);
+            add_filter('site_option_welcome_email', array($this, 'welcomeEmail'));
+        }
     }
 
     /**
