@@ -183,6 +183,7 @@ class UnloqUAuth
     /* Performs access token login */
     private function accessToken($token)
     {
+        global $user;
         if (!$token) {
             UnloqUtil::flash("The UAuth access token is missing.");
             wp_redirect(wp_login_url());
@@ -211,8 +212,8 @@ class UnloqUAuth
         }
         // Once we're here, we got the user data in the $res->data field. Primarily, we have $res->data['id'] and $res->data['email']
         $unloqId = strval($res->data['id']);
-        $user = $this->_readUser($res->data, $unloqId);
-        if ($user === false) {
+        $loginUser = $this->_readUser($res->data, $unloqId);
+        if ($loginUser === false) {
             wp_redirect(wp_login_url());
             exit;
         }
@@ -222,9 +223,11 @@ class UnloqUAuth
             $secure_cookie = true;
             force_ssl_admin(true);
         }
-        wp_set_auth_cookie($user->ID, false, $secure_cookie);
-        wp_set_current_user($user->ID, $user->user_login);
-        $redirect_to = apply_filters('login_redirect', admin_url(), $requested_redirect_to, $user);
+        wp_set_auth_cookie($loginUser->ID, false, $secure_cookie);
+        wp_set_current_user($loginUser->ID, $loginUser->user_login);
+        $user = $loginUser;
+        $redirect_to = apply_filters('login_redirect', admin_url(), $requested_redirect_to, $loginUser);
+        $redirect_to = wp_sanitize_redirect($redirect_to);
         if (!is_string($redirect_to) || $redirect_to == "") {
             $redirect_to = site_url();
         }

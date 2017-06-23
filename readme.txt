@@ -98,7 +98,11 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
-= 1.5.16 =
+= 1.5.18 =
+* On successful login, the global $user variable is updated with the user that just logged in, so that other plugins that depend on the global $user variable can read the latest user data.
+ Specific issues were tested with "redirect-after-login" plugin.
+
+= 1.5.17 =
 * Custom login path is completely disabled while iTheme Security plugin is active. This is to avoid login issues and incompatibilities between plugins.
 
 = 1.5.15 =
