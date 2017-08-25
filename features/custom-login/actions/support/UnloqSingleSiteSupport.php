@@ -70,7 +70,7 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
                 <input id="unloq_custom_admin_url" type="text" name="unloq_custom_admin_url" value="' . $this->newLoginSlug() . '">' . ($this->useTrailingSlashes() && $slug !== 'wp-login.php'
                     ? ' <code>/</code>' : '');
         } else {
-            echo '<code>' . trailingslashit(home_url()) . '?</code> 
+            echo '<code>' . trailingslashit(home_url()) . ($slug === 'wp-login.php' ? '' : '?'). '</code> 
                 <input id="unloq_custom_admin_url" type="text" name="unloq_custom_admin_url" value="' . $this->newLoginSlug() . '">';
         }
     }
@@ -163,10 +163,13 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         if (!is_multisite() && ($this->isWpSignUp() || $this->isWpActivate()) !== false) {
             $this->showNotFound();
         }
+        $slug = $this->newLoginSlug();
+        if($slug === 'wp-login.php') return;
         $request = parse_url($_SERVER['REQUEST_URI']);
-        if ((strpos($_SERVER['REQUEST_URI'],
-                    'wp-login.php') !== false || untrailingslashit($request['path']) === site_url('wp-login',
-                    'relative')) && !is_admin()
+        if ((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false ||
+                untrailingslashit($request['path']) === site_url('wp-login', 'relative'
+            )) &&
+            !is_admin()
         ) {
             $this->wp_login_php = true;
             $_SERVER['REQUEST_URI'] = $this->userTrailingslashit('/' . str_repeat('-/',
@@ -192,20 +195,33 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         $currentPage = $pagenow;
         $hasRedirect = true;
         $exposeWpAdmin = get_option("unloq_custom_admin_expose");
+        $slug = $this->newLoginSlug();
         if ($exposeWpAdmin === false) $exposeWpAdmin = "true";
         if ($exposeWpAdmin === "false" && is_admin() && !is_user_logged_in() && !defined('DOING_AJAX') && $pagenow !== 'admin-post.php') {
             $this->showNotFound();
         }
         // We check for backward-compatibility with no redirect path.
-        if ($this->newLoginSlug() == 'wp-login.php' && strpos($_SERVER['PHP_SELF'], 'wp-login.php') !== false) {
-            $currentPage = 'wp-login.php';
-            $hasRedirect = false;
+        if ($slug == 'wp-login.php' && strpos($_SERVER['PHP_SELF'], 'wp-login.php') !== false) {
+            return;
         }
-        $request = parse_url($_SERVER['REQUEST_URI']);
+        $reqUri = $_SERVER['REQUEST_URI'];
+        if(strpos($reqUri, "/-/-/-/-/-/-/") === 0 && isset($_SERVER['REDIRECT_URL'])) {
+            $reqUri = $_SERVER['REDIRECT_URL'];
+        }
+        $request = parse_url($reqUri);
         try {
             $newLoginUrl = $this->getNewLoginUrl();
             $parsedLoginUrl = parse_url($newLoginUrl);
             if (isset($request['path']) && isset($parsedLoginUrl['path']) && ($request['path'] === $parsedLoginUrl['path'] || $request['path'] . '/' === $parsedLoginUrl['path'])) {
+                if(!$this->getPermalinkStructure()) {
+                    // We have to check if we do not permalinks. If we do not, we have to skip the parsing.
+                    parse_str(isset($request['query']) ? $request['query'] : "", $reqQuery);
+                    parse_str(isset($parsedLoginUrl['query']) ? $parsedLoginUrl['query'] : "", $unloqQuery);
+                    if(!isset($parsedLoginUrl['query']) || !isset($reqQuery)) return;
+                    if(!isset($reqQuery[$parsedLoginUrl['query']])) {
+                        return;
+                    }
+                }
                 $this->wp_login_php = true;
                 global $error, $interim_login, $action, $user_login;
                 @require_once ABSPATH . 'wp-login.php';
@@ -258,7 +274,10 @@ class UnloqSingleSiteSupport extends UnloqCustomAdminNotices
         if ($this->getServerRequestUri() ===
             $this->userTrailingslashit(str_repeat('-/', 10))
         ) {
-            $_SERVER['REQUEST_URI'] = $this->userTrailingslashit('/wp-login-php/');
+            $reqUri = $this->userTrailingslashit('/wp-login-php/');
+            if(strpos($reqUri, "/-/-/-/-/-/-/") !== 0) {
+                $_SERVER['REQUEST_URI'] = $reqUri;
+            }
         }
         require_once(ABSPATH . WPINC . '/template-loader.php');
         die;

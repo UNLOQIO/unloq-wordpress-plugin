@@ -61,15 +61,20 @@ class UnloqCustomAdminBase
      */
     public function getNewLoginUrl($scheme = null)
     {
+        $isMultiSite = $this->isMultisite();
         $slug = $this->newLoginSlug();
+        if($isMultiSite) {
+            $baseUrl = network_home_url('/', $scheme);
+        } else {
+            $baseUrl = home_url('/', $scheme);
+        }
         if ($slug === 'wp-login.php') {
-            return home_url('/', $scheme) . $slug;
+            return $baseUrl . $slug;
         }
         if ($this->getPermalinkStructure()) {
-            return $this->userTrailingslashit(home_url('/',
-                    $scheme) . $slug);
+            return $this->userTrailingslashit($baseUrl . $slug);
         }
-        return home_url('/', $scheme) . '?' . $slug;
+        return $baseUrl . '?' . $slug;
     }
 
     /**

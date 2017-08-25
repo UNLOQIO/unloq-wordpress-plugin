@@ -2,7 +2,7 @@
 /*
 Plugin Name: UNLOQ.io authentication
 Plugin URI: https://unloq.io
-Version: 1.5.18
+Version: 1.5.19
 Author: UNLOQ.io
 Description: Perform UNLOQ.io authentications with the click of a button
 */

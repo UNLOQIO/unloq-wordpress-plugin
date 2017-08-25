@@ -1,4 +1,4 @@
-=== UNLOQ.io Passwordless authentication ===
+=== UNLOQ Two Factor Authentication (2FA) ===
 Contributors: unloqer
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, ios, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, unloq, password, passwordless, phone, secure, security, smartphone, ssl, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, authorization
 Requires at least: 3.5
@@ -7,11 +7,11 @@ Stable tag: trunk
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-UNLOQ provides a free, easy to use and integrate, strong authentication systems that replaces passwords with your phone.
+Fell off the Clef? UNLOQ is here to catch you. Experience secure Two Factor Authentication (2FA) now. For free.
 
 == Description ==
 
-Looking to add Multi-factor authentication to your WordPress website?
+Fell off the Clef? UNLOQ is here to catch you. Experience secure Two Factor Authentication (2FA) now. For free.
 
 ## DESCRIPTION
 
@@ -98,6 +98,9 @@ For now, UNLOQ is available in English. Please consider helping translate UNLOQ.
 
 
 == Changelog ==
+= 1.5.19 =
+* Fixed incorrect login URL redirects when used with plugins that perform i18n, and password reset/welcome email URL sending.
+
 = 1.5.18 =
 * On successful login, the global $user variable is updated with the user that just logged in, so that other plugins that depend on the global $user variable can read the latest user data.
  Specific issues were tested with "redirect-after-login" plugin.

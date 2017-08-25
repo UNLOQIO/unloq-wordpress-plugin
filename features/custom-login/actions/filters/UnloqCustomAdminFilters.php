@@ -22,7 +22,9 @@ class UnloqCustomAdminFilters extends UnloqWpmuSupport
             add_filter('site_url', array($this, 'siteUrl'), 10, 4);
             add_filter('network_site_url', array($this, 'networkSiteUrl'), 10, 3);
             add_filter('wp_redirect', array($this, 'wpRedirect'), 10, 2);
-            add_filter('site_option_welcome_email', array($this, 'welcomeEmail'));
+            add_filter('site_option_welcome_email', array($this, 'changeLoginUrl'));
+            add_filter('lostpassword_url', array($this, 'changeLoginUrl'));
+            add_filter('login_url', array($this, 'changeLoginUrl'));
         }
     }
 
@@ -87,8 +89,10 @@ class UnloqCustomAdminFilters extends UnloqWpmuSupport
      * @param $value
      * @return mixed
      */
-    public function welcomeEmail($value)
+    public function changeLoginUrl($value)
     {
+        $slug = $this->newLoginSlug();
+        if($slug === 'wp-login.php') return $value;
         return $value = str_replace('wp-login.php',
             trailingslashit($this->getSiteSlugOption()), $value);
     }
